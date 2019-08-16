@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:include="include/admin/adminHeader::html('编辑分类')">
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div th:replace="include/admin/adminNavigator::html"></div>
+	
+<script>
+$(function(){
+	var data4Vue={
+			uri:"categories",
+			listURL:"admin_category_list",
+			bean:{id:0,name:'',description:''},
+			file:'',
+	}
+	
+	vue = new Vue({
+		el:"#workingArea",
+		data:data4Vue,
+		
+		mounted:function(){
+			this.get();
+		},
+		
+		methods:{
+			get:function(){
+				console.log("location="+location);
+				var search = location.search;
+				if (search==null)
+					{return;}
+				//location 是 html内置对象 包含当前uri信息
+				//search是其查询子串
+				//本例中查询时，search形式为 ?id=* 
+				id = search.substr(4);
+				console.log(search);
+				console.log("id="+id);
+				//解析结果没错，但是例子中采用的是 一个包装的，解析 url得到参数值的方法
+				//可以作为工具类以后使用
+				
+				//然后的工作就是根据id来查询数据库获取id=8的分类 信息
+				//还需要查询数据库，本来 listCategory页面上就有信息，能否就从listCategory页面上
+				//获取，以省去查询数据库的花费时间呢
+				
+				//考虑页面A 跳转到页面B，其实也经过了后端，能不能将A上的某些数据通过url返回给
+				//页面B，当然是可以的了，此处其实已经将id返回给B页面了，再给个 description就可以了
+				
+				var url = this.uri+"/"+id;
+				axios.get(url).then(function(response){
+					vue.bean = response.data;
+					console.log(vue.bean);
+				})
+			},
+			
+			//get()
+			
+			//editDiv 中，input标签内容改变时，vue.bean 相应属性已经发生改变了
+			//在update函数中可以直接调用了
+			//但是之后我们需要提交到后端，就要知道后端的接口了
+			//首先是 url ----- 后端的相应方法映射到哪个路径上，比如说 put(id)映射到
+			//Put请求的 /categories/id 路径上
+			//其次是参数，我们需要提供什么样的参数 比如 id
+			//然后是 返回值，后端处理以后可能会给我们返回什么东西
+			update:function(){
+				if(checkEmpty(this.bean.name,"分类名称"))
+					{return;}
+				if(checkEmpty(this.bean.description,"分类描述")){
+					return;
+				}
+				//console.log("update():");
+				var url=this.uri+"/"+this.bean.id;
+				//console.log("url:"+url);
+				var formData = new FormData();
+				formData.append("name",this.bean.name);
+				formData.append("description",this.bean.description);
+				formData.append("image",this.file);
+				
+				//console.log("name:"+this.bean.name);
+				//console.log("des:"+this.bean.description);
+				
+				//console.log(formData);
+				
+				//console.log("outside:");
+				//console.log(this);
+				//axios.put(url,formData).then(function(response){
+					//注意 此函数内部this指针指向的就不是 vue对象了
+					//通过打印，外部指针指向是 hn(其实是vue)
+					//而内部指针指向是 window,其内部包含了 vue对象，this.vuek可以取出来
+					//console.log(this);
+					//console.log(this.vue.bean.description);
+					//location.href可以实现地址栏跳转
+					//location.href=vue.listURL;
+				//});
+				
+				axios.post(url,formData).then(function(response){
+					console.log(vue.bean.description);
+					location.href=vue.listURL;
+				});
+			},//update()
+			
+			getFile:function(event){
+				this.file = event.target.files[0];
+			},//getFile()
+			
+		}//methods:
+		
+	});
+});
+
+
+
+
+
+</script>
+
+<div id="workingArea">
+	<ul class="breadcrumb">
+		<li><a href="admin_category_list">所有分类</a></li>
+		<li class="active">编辑分类</li>
+	</ul>
+	
+	<div class="panel panel-warning editDiv">
+	<div class="panel-heading">编辑分类</div>
+	<div class="panel-body">
+            <table class="editTable">
+                <tr>
+                    <td>分类名称</td>
+                    <td><input  @keyup.enter="update" v-model.trim="bean.name" type="text" class="form-control"></td>
+                </tr>
+                <tr>
+                    <td>分类描述</td>
+                    <td>
+                        <input  @keyup.enter="update" v-model.trim="bean.description" type="text" class="form-control">
+                    </td>
+               </tr>
+               <tr>
+                    <td>分类图片</td>
+                    <td>
+                        <input id="categoryPic" accept="image/*" type="file" name="image" @change="getFile($event)" />
+                    </td>
+                </tr>
+                <tr class="submitTR">
+                    <td colspan="2" align="center">
+                        <input type="hidden" name="id"   v-model.trim="bean.id" >
+                        <a href="#nowhere" class="btn btn-success" @click="update">提 交</a>
+                    </td>
+                </tr>
+            </table>
+        </div><!-- panel-body -->
+	</div><!-- editDiv -->
+</div><!-- workingArea  -->
+</body>
+</html>

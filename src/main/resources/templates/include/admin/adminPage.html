@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<div class="pageDiv" th:fragment="html">
+		<nav class="myNav">
+			<ul class="pagination">
+				<li :class="{disabled : pagination.first}">
+				<!-- 之所以用jump('first') 而不是 jump(0) 或者 
+				jump(pagination.number-1) 是由于需要标签的可读性，
+				不要显示过于复杂的逻辑，应该养成这样的习惯-->
+					<a href="#nowhere" @click="jump('first')">&laquo;</a>
+				</li>
+<!-- 				<li :class="{disabled : pagination.first}">
+					<a href="#nowhere" @click="jump('pre')">上一页</a>
+				</li> -->
+				<li :class="firstPage">
+				<a href="#nowhere" @click="jump('pre')">上一页</a>
+				</li>
+				<li>
+				<a href="#nowhere">{{pagination.number+1}}</a>
+				</li>
+				<li :class="{ disabled: pagination.last }">
+					<a href="#nowhere" @click="jump('next')">下一页</a>
+				</li>				
+				<li :class="{ disabled: pagination.last }">
+	      		<a  href="#nowhere" @click="jump('last')">&raquo;</a>
+				</li>
+			</ul>
+		
+		</nav>
+	
+	</div>
+	
+	
+	<!-- 通过此处的测试得到结果，class=“pagination” 就能够通过 -->
+	<!-- vue  {{pagination获得结果}} -->
+	<div class="pagination">
+		{{pagination.number}}>0<br>
+	</div>
+</body>
+
+<!-- 为何body中的nav中可以获取 pagination对象，而 这里的script标签中无法获取 -->
+<!--  是 undefine ，究竟是怎样的机制使得它可以获取-->
+<!-- 
+<script>
+	console.log("pagenumber:"+pagination.number);
+	console.log(!(pagination.number)>0);
+</script> -->
+</html>
