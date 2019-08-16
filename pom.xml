@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.becklu</groupId>
+  <artifactId>simple_tmall</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>war</packaging>
+  <name>simple_tmall</name>
+  
+  <parent>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-parent</artifactId>
+  	<version>1.5.9.RELEASE</version>
+  </parent>
+  
+  <dependencies>
+  <!-- springboot web -->
+  <dependency>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+  
+  <!-- embadded tomcat -->
+  <!-- tomcat中也有servlet-api包，这样，发生了冲突
+	解决方法：添加<scope>provided</scope>，
+	因为provided表明该包只在编译和测试的时候用，
+	所以，当启动tomcat的时候，就不会冲突了，完整依赖如下：
+	
+	scope:provided 表示该依赖（组件，jar包）只在编译和测试时使用
+	发布版不起作用
+	
+	因为spring-boot-starter-web中包含内嵌的tomcat容器，
+	所以直接部署在外部容器会冲突报错。
+	 -->
+  <dependency>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-starter-tomcat</artifactId>
+  	<scope>provided</scope>
+  </dependency>
+  
+  <!-- 支持热部署 -->
+  <dependency>
+  	<groupId>org.springframework.boot</groupId>
+  	<artifactId>spring-boot-devtools</artifactId>
+  	<optional>true</optional>
+  </dependency>
+  
+    	<!-- 解析xml文件，要放在相对靠前 -->
+  	<dependency>
+  		<groupId>xml-apis</groupId>
+  		<artifactId>xml-apis</artifactId>
+  	</dependency>
+  	
+  	  	<!-- jpa:java持久层api，底层是hibernate，hibernate是持久化框架，
+  	对数据库表创建持久化类，使得curd更加面向对象，而不是具体的sql语句
+  	-->
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-data-jpa</artifactId>
+  	</dependency>
+  		
+  	<!-- redis -->	
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-data-redis</artifactId>
+  	</dependency>
+  	
+  	<!-- test -->
+  	<dependency>
+  		<groupId>org.springframework.boot</groupId>
+  		<artifactId>spring-boot-starter-test</artifactId>
+  	</dependency>
+  	
+  	        <!-- 测试支持 -->
+        <dependency>
+              <groupId>junit</groupId>
+              <artifactId>junit</artifactId>
+              <version>4.12</version>
+              <scope>test</scope>
+        </dependency>   
+        
+                <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        
+        <!-- 暂时不引入 elastic search了 -->
+        <!-- thymeleaf legacyhtml5 模式支持 -->      
+        <dependency>
+            <groupId>net.sourceforge.nekohtml</groupId>
+            <artifactId>nekohtml</artifactId>
+            <version>1.9.22</version>
+        </dependency> 
+        
+                <!-- jsp的支持.-->
+        <dependency>
+               <groupId>org.apache.tomcat.embed</groupId>
+               <artifactId>tomcat-embed-jasper</artifactId>
+               <version>8.5.23</version>
+        </dependency>   
+        
+                <!-- mysql 当然了-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.21</version>
+        </dependency>
+        
+	<!-- commons-lang -->
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
+        </dependency>     
+        
+       <!-- 先不引入shiro -->
+       <!-- 先不引入 hsqldb -->
+  
+  
+  </dependencies>
+  
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+    
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+  
+  
+  
+  
+</project>
