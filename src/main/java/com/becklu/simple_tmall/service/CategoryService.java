@@ -22,4 +22,20 @@ public class CategoryService {
 		return page;
 		
 	} 
+	
+	public void add(Category bean){
+		categoryDAO.save(bean);
+	}
+	
+	public void delete(int id){
+		categoryDAO.delete(id);
+	}
+	
+	public Category get(int id){
+		return categoryDAO.getOne(id);
+	}
+	
+	public void update(Category bean){
+		categoryDAO.save(bean);
+	}
 }

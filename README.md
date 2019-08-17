@@ -9,10 +9,16 @@ xml解析xmlns.apis，jpa持久化data-jpa，test，junit，thymleaf，jsp，mys
 root/root
 [5]设计分类管理的页面资源 listCategory.html
 其中采用了 thymleaf技术-- 包含四个嵌入页面 adminHeader，adminNavigator，adminPage，adminFooter
-[6]请求路径（url）页面映射
-"admin"-->"redirect:admin_category_list"
-“admin_category_list”--->listCategory.html
+[6]路径的页面映射（包括直接地址栏输入 和 超链接a标签跳转）
+(1)"/admin"-->"redirect:admin_category_list"
+(2)"/admin_category_list"--->"admin/listCategory"(templates/admin/listCategory.html)
+(3):href="'admin_category_edit?id=' + bean.id "--->(templates/admin/editCategory.html)
+(4):href="'admin_property_list?cid='+bean.id"--->(templates/admin/listProperty)
+(5):href="'admin_product_list?cid=' + bean.id "--->(templates/admin/listProduct)
+------url的格式要按照REST标准和需要设计，比如跳转到 listProperty页面需要参数 category.id,形参为cid-------
+------格式为?cid=XX-----------
+
 [7]listCategory页面上的数据交互请求路径
-(1)admin_property_list?cid=' + bean.id  --> listProperty()
-(2)admin_product_list?cid=' + bean.id -->listProduct()
-(3)admin_category_edit?id=' + bean.id --> editCategory()
+(1)list(start)：get(url),url="categories?start="+start;需要查询表category返回分页格式数据，默认显示start对应的page
+(2)add(bean):post(url,bean),url="categories" ;需要往category表中持久化数据
+

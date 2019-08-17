@@ -38,8 +38,41 @@
 				},//list()
 				
 				add:function(){
+					if(checkEmpty(this.bean.name,"分类名称")){
+						return;
+					}
+					if(checkEmpty(this.bean.description,"分类描述")){
+						return;
+					}
+					if(checkEmpty(this.file,"分类图片")){
+						return;
+					}
 					
+					var url = this.uri;
+					var formData = new FormData();
+					formData.append("name",this.bean.name);
+					formData.append("description",this.bean.description);
+					formData.append("image",this.file);
+					axios.post(url,formData).then(function(response){
+						vue.list(0);
+					});
 				},//add()
+				
+				deleteBean:function(id){
+					var url = this.uri+"/"+id;
+					axios.delete(url).then(function(response){
+						vue.list(0);
+					});
+				},
+				
+                getFile: function (event) {
+                    this.file = event.target.files[0];
+                    console.log("getFile方法被调用："+this.file);
+                },//getFile()				
+				
+				jump:function(page){
+					jump(page,vue);
+				},
 				
 				
 				

@@ -68,13 +68,22 @@ $(function(){
 				if(checkEmpty(this.bean.description,"分类描述")){
 					return;
 				}
+				if(checkEmpty(this.file,"分类图片")){
+					return;
+				}
+				
 				//console.log("update():");
-				var url=this.uri+"/"+this.bean.id;
+				//var url=this.uri+"/"+this.bean.id;
 				//console.log("url:"+url);
+				var url = this.uri+"/"+this.bean.id;
 				var formData = new FormData();
 				formData.append("name",this.bean.name);
 				formData.append("description",this.bean.description);
 				formData.append("image",this.file);
+				
+				axios.put(url,formData).then(function(response){
+					location.href = vue.listURL;
+				});
 				
 				//console.log("name:"+this.bean.name);
 				//console.log("des:"+this.bean.description);
@@ -93,10 +102,12 @@ $(function(){
 					//location.href=vue.listURL;
 				//});
 				
-				axios.post(url,formData).then(function(response){
+/* 				axios.post(url,formData).then(function(response){
 					console.log(vue.bean.description);
 					location.href=vue.listURL;
-				});
+				}); */
+				
+				
 			},//update()
 			
 			getFile:function(event){
