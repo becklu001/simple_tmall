@@ -22,3 +22,18 @@ root/root
 (1)list(start)：get(url),url="categories?start="+start;需要查询表category返回分页格式数据，默认显示start对应的page
 (2)add(bean):post(url,bean),url="categories" ;需要往category表中持久化数据
 
+
+===============================================================
+第二部分后台：属性管理
+【1】数据库表：property(id,cid,name) 外键为cid--->category表（多对一）
+【2】前端页面：listProperty 和 editProperty
+【3】入口：listCategory.html :href="'admin_property_list?cid'=bean.id" --->"admin/listProperty"
+【4】页面映射：
+(1):href="'admin_property_edit?id=' + bean.id ---> "admin/editProperty"
+【5】前端页面接口：
+(1)get(url);url =  "categories/"+cid+"/"+"properties"+"?start="+start;
+(2)post(url,this.bean);url="properties"
+(3)delete(url);url="properties/"+id
+(4)put(url,vue.bean);url="properties"
+
+================================================================
