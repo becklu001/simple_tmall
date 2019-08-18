@@ -1,0 +1,14 @@
+[1]url:"categories/{cid}/properties"
+	"categories/cid/properties?start=0"
+	第一个参数cid是 path中的参数，而第二个参数start是查询字串（location.search）中的参数；
+两个参数获取的方法不一样
+	@PathVariable("cid")
+	@RequestParam(value="start",defaultValue="0")
+
+[2]添加bean的方法中，当前端传递的参数 为 this.bean 时，需要用@RequestBody注解来获取
+比如 axios.post(url,this.bean).then();
+	对应的controller.add(@RequestBody Property bean)
+而当前端传来的参数是 formData类型时，会自动填充（字段名称要和pojo属性对应）
+axios.post(url,formData)
+	对应的controller.add(Property bean)
+
