@@ -28,8 +28,21 @@ public class PropertyService {
 		
 	}
 	
+	public Property get(int id){
+		return propertyDAO.getOne(id);
+	}
+	
 	public void add(Property bean){
 		System.out.println("propertyService.add()");
+		propertyDAO.save(bean);
+	}
+	
+	public void delete(int id){
+		System.out.println("propertyService.delete()");
+		propertyDAO.delete(id);
+	}
+	
+	public void update(Property bean){
 		propertyDAO.save(bean);
 	}
 	

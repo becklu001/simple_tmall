@@ -1,14 +1,19 @@
-[1]url:"categories/{cid}/properties"
+ï»¿[1]url:"categories/{cid}/properties"
 	"categories/cid/properties?start=0"
-	µÚÒ»¸ö²ÎÊıcidÊÇ pathÖĞµÄ²ÎÊı£¬¶øµÚ¶ş¸ö²ÎÊıstartÊÇ²éÑ¯×Ö´®£¨location.search£©ÖĞµÄ²ÎÊı£»
-Á½¸ö²ÎÊı»ñÈ¡µÄ·½·¨²»Ò»Ñù
+	ç¬¬ä¸€ä¸ªå‚æ•°cidæ˜¯ pathä¸­çš„å‚æ•°ï¼Œè€Œç¬¬äºŒä¸ªå‚æ•°startæ˜¯æŸ¥è¯¢å­—ä¸²ï¼ˆlocation.searchï¼‰ä¸­çš„å‚æ•°ï¼›
+ä¸¤ä¸ªå‚æ•°è·å–çš„æ–¹æ³•ä¸ä¸€æ ·
 	@PathVariable("cid")
 	@RequestParam(value="start",defaultValue="0")
 
-[2]Ìí¼ÓbeanµÄ·½·¨ÖĞ£¬µ±Ç°¶Ë´«µİµÄ²ÎÊı Îª this.bean Ê±£¬ĞèÒªÓÃ@RequestBody×¢½âÀ´»ñÈ¡
-±ÈÈç axios.post(url,this.bean).then();
-	¶ÔÓ¦µÄcontroller.add(@RequestBody Property bean)
-¶øµ±Ç°¶Ë´«À´µÄ²ÎÊıÊÇ formDataÀàĞÍÊ±£¬»á×Ô¶¯Ìî³ä£¨×Ö¶ÎÃû³ÆÒªºÍpojoÊôĞÔ¶ÔÓ¦£©
+[2]æ·»åŠ beançš„æ–¹æ³•ä¸­ï¼Œå½“å‰ç«¯ä¼ é€’çš„å‚æ•° ä¸º this.bean æ—¶ï¼Œéœ€è¦ç”¨@RequestBodyæ³¨è§£æ¥è·å–
+æ¯”å¦‚ axios.post(url,this.bean).then();
+	å¯¹åº”çš„controller.add(@RequestBody Property bean)
+è€Œå½“å‰ç«¯ä¼ æ¥çš„å‚æ•°æ˜¯ formDataç±»å‹æ—¶ï¼Œä¼šè‡ªåŠ¨å¡«å……ï¼ˆå­—æ®µåç§°è¦å’Œpojoå±æ€§å¯¹åº”ï¼‰
 axios.post(url,formData)
-	¶ÔÓ¦µÄcontroller.add(Property bean)
+	å¯¹åº”çš„controller.add(Property bean)
+
+[3]axios.min.js å’Œ vue.min.jsç­‰åº“æ–‡ä»¶å‡ºç°è«åå…¶å¦™çš„è¯­æ³•é”™è¯¯ï¼ˆç¼ºå°‘åˆ†å·ç­‰ç­‰ï¼‰ï¼Œéœ€è¦å³é”®é€‰æ‹©volidate
+å³å¯è§£å†³
+
+
 

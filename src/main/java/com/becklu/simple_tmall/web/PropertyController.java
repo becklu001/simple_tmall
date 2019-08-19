@@ -2,9 +2,11 @@ package com.becklu.simple_tmall.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,11 +28,28 @@ public class PropertyController {
 		return page;
 	}
 	
+	@GetMapping("properties/{id}")
+	public Property get(@PathVariable("id") int id){
+		return propertyService.get(id);
+	}
+	
 	@PostMapping("properties")
 	public Property add(@RequestBody Property bean){
 		System.out.println(bean.getName());
 		System.out.println(bean.getCategory());
 		propertyService.add(bean);
+		return bean;
+	}
+	
+	@DeleteMapping("properties/{id}")
+	public String delete(@PathVariable("id") int id){
+		propertyService.delete(id);
+		return null;
+	}
+	
+	@PutMapping("properties")
+	public Property update(@RequestBody Property bean){
+		propertyService.update(bean);
 		return bean;
 	}
 }
