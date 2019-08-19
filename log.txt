@@ -15,5 +15,7 @@ axios.post(url,formData)
 [3]axios.min.js 和 vue.min.js等库文件出现莫名其妙的语法错误（缺少分号等等），需要右键选择volidate
 即可解决
 
+[4]html页面中，就算是 methods中的方法后面少一个逗号，也会造成页面渲染不出来，而且没有提示，这样很恶心
 
+[5]
 

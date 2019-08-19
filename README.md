@@ -37,3 +37,12 @@ root/root
 (4)put(url,vue.bean);url="properties"
 
 ================================================================
+第三部分后台：产品管理
+【1】数据库表：product(id,name,subTitle,originalPrice,promotePrice,stock,cid,createDate)
+【2】前端页面：listProduct，editProduct
+【3】入口 listCategory.html :href="'admin_product_list?cid'=bean.id" --->"admin/listProduct"
+【4】前端页面超链接：
+（1）:href="'admin_productImage_list?pid=' + bean.id "--- 
+（2）:href="'admin_propertyValue_edit?pid=' + bean.id "---
+（3）:href="'admin_product_edit?id=' + bean.id "---
+【5】前端页面接口：
