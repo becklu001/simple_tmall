@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,6 +28,11 @@ public class ProductController {
 		return page;
 	}
 	
+	@GetMapping("products/{id}")
+	public Product getProduct(@PathVariable("id") int id){
+		return productService.getProduct(id);
+	}
+	
 	@PostMapping("products")
 	public Product add(@RequestBody Product bean){
 		productService.add(bean);
@@ -37,5 +43,11 @@ public class ProductController {
 	public String delete(@PathVariable("id") int id){
 		productService.delete(id);
 		return null;
+	}
+	
+	@PutMapping("products")
+	public Product updateProduct(@RequestBody Product bean){
+		productService.updateproduct(bean);
+		return bean;
 	}
 }

@@ -26,12 +26,20 @@ public class ProductService {
 		return page;
 	}
 	
+	public Product getProduct(int id){
+		return productDAO.getOne(id);
+	}
+	
 	public void add(Product bean){
 		productDAO.save(bean);
 	}
 	
 	public void delete(int id){
 		productDAO.delete(id);
+	}
+	
+	public void updateproduct(Product bean){
+		productDAO.save(bean);
 	}
 	
 	

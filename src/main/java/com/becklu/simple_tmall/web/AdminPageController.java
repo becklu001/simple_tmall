@@ -33,7 +33,13 @@ public class AdminPageController {
 	
 	@GetMapping("/admin_product_list")
 	public String listProduct(){
+		System.out.println("AdminController:listProduct()");
 		return "admin/listProduct";
+	}
+	
+	@GetMapping("/admin_product_edit")
+	public String editProduct(){
+		return "admin/editProduct";
 	}
 	
 }
