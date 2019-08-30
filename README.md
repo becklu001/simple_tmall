@@ -46,3 +46,28 @@ root/root
 （2）:href="'admin_propertyValue_edit?pid=' + bean.id "---
 （3）:href="'admin_product_edit?id=' + bean.id "---
 【5】前端页面接口：
+
+=================================================================
+第三部分后台：产品属性值管理
+【1】数据库表：propertyValue(id,pid,ptid,value)
+产品属性表（pv表）比较特殊，因为它和两张表同时关联，product表（p表） 和 property表（pt表）
+pid 和 ptid在 p表和 pt表中分别为外键
+(1)category 表和 product表是 1对多，category表和 property表也是1对多
+（2）product和property表（通过category表）是多对多（m:n）
+(3)考虑对pv表的crud，查和改都比较好进行，最怕就是 增加 和 删除，由于cid同时作为p表和pt表的外键
+	如果 insert into pv values (null,1,201,"pv1");
+	其中 pid=1 对应的 cid = 1，而ptid=201 对应的 cid = 2，应该会造成冲突
+	----逻辑上是如此的，cid=2 的类才具有的pt，不应改cid=1的product具有-----
+	----事实证明了，这样的冲突并不会被检测出来-----所以，不能靠外键约束来制约这里的逻辑冲突----
+	
+	
+	
+（4）所能做的只是 限制直接往pv表中插入记录，而是先读取，后修改
+	select * from property where cid=(select cid from product where name="xxx")
+	读取出 产品名为xxx的产品的 所有属性，但是该sql如何在jpa中实现
+
+	先读取product对应的category，根据category取出 property列表
+	然后在propertyvalue表中通过jpa getByProductAndProperty，如果获得的pv为空，那么说明该propertyvalue记录
+	还不存在，可以初始化，并且保存到pv表中
+
+【2】href="admin_propertyValue_list?pid="

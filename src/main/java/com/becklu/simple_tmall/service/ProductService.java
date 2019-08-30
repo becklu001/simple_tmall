@@ -1,6 +1,8 @@
 package com.becklu.simple_tmall.service;
 
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +33,8 @@ public class ProductService {
 	}
 	
 	public void add(Product bean){
+		Date date = new Date();
+		bean.setCreateDate(date);
 		productDAO.save(bean);
 	}
 	

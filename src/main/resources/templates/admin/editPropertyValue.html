@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymleaf.org">
+<head th:include="include/admin/adminHeader::html('产品属性管理')">
+<meta charset="UTF-8">
+
+</head>
+<body>
+
+<div th:replace="include/admin/adminNavigator::html"></div>
+
+<!-- href='admin_propertyValue_edit?pid=' + bean.id  -->
+<!-- url链接传递过来的参数是 productId，可以获取product，通过product可以获取category -->
+<!-- 通过category 可以获取 property -->
+<script>
+
+$(function(){
+	var data4Vue = {
+			uri:"propertyValues",
+			product:'',
+			category:'',
+			beans:[],/* beans的元素是 propertyValue类型的对象（propertyValue表的一条记录） */
+			id:'',
+	};
+	
+	var vue = new Vue({
+		el:"#workingArea",
+		data:data4Vue,
+		
+		mounted:function(){
+			this.get();
+			this.list();
+		},
+		
+		methods:{
+			get:function(){
+				var id = getUrlParms("pid");
+				var url = "products/"+id;
+				axios.get(url).then(function(response){
+					vue.product = response.data;
+					vue.category = vue.product.category;
+				});
+			},//getProduct()
+			
+			list:function(){
+				/* ex:url=propertyValues?pid=13 */
+				var url = this.uri+"?pid="+getUrlParms("pid");
+				axios.get(url).then(function(response){
+					vue.beans = response.data;
+					console.log(vue.beans);
+				});
+				
+			},//list
+			
+			update:function(bean){
+				var url = this.uri;
+				$("#pvid"+bean.id).css("border","2px solid yellow");
+				if(checkEmpty(bean.value,"属性值")){
+					return;
+				}
+				
+				var confirmUpdate = confirm("确定更新");
+				if(!confirmUpdate){
+					return;
+				}
+				
+				axios.put(url,bean).then(function(response){
+			        if(bean.id==response.data.id)
+			            $("#pvid"+bean.id).css("border","2px solid green");
+			        else
+			            $("#pvid"+bean.id).css("border","2px solid red");
+				});
+			},//update
+		},//methods
+		
+	});
+	
+	
+});
+
+</script>
+
+<div id="workingArea">
+	    <ol class="breadcrumb">
+        <li><a href="admin_category_list">所有分类</a></li>
+        <li><a :href="'admin_product_list?cid='+category.id">{{category.name}}</a></li>
+        <li class="active">{{product.name}}</li>
+        <li class="active">产品属性管理</li>
+    </ol>
+    
+        <div class="editPVDiv">
+        <div v-for="bean in beans" class="eachPV">
+            <span class="pvName" >{{bean.property.name}}</span>
+            <span class="pvValue"><input class="pvValue" :id="'pvid'+bean.id" type="text" v-model="bean.value" @keyup.enter="update(bean)"></span>
+        </div>
+        <div style="clear:both"></div>
+    </div><!-- editPVDiv -->
+
+
+</div><!-- workingArea -->
+</body>
+</html>
